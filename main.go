@@ -5,21 +5,22 @@ import (
     //"log"
     "net/http"
 	"strings"
-	"reflect"
+	"encoding/json"
 	"github.com/gorilla/mux"
 	"github.com/gocolly/colly"
 )
 
 type animeInfo struct {
-	Name  string 
-	Rank     string 
-	Popularity string 
-	Score   string
+	Name  string `json:"Name"`
+	Rank     string `json:"Rank"`
+	Popularity string `json:"Popularity"`
+	Members    string`json:"Members"`
+	//Score   string
 }
 
 
 
-func ScrapeWebsite(id string){
+func ScrapeWebsite  (id string) animeInfo {
 
 	info := animeInfo{}
 	c := colly.NewCollector(
@@ -30,11 +31,18 @@ func ScrapeWebsite(id string){
 		    info.Name = e.Text
 			fmt.Println(e.Text)
 	})
-	
-	c.OnHTML(".numbers", func(e *colly.HTMLElement){
-		ProcessStr := e.Text
-		StrArr := strings.Split(ProcessStr,"\n")
-		fmt.Println(reflect.TypeOf(StrArr))
+
+	c.OnHTML(".stats-block", func(e *colly.HTMLElement){
+
+		var StatArr[] string
+		e.ForEach("span.numbers", func (_ int ,el *colly.HTMLElement){
+			StatArr = append(StatArr, el.Text)
+		})
+
+		fmt.Println(StatArr)
+		info.Rank = strings.Split(StatArr[0]," ")[1][1:]
+		info.Popularity = strings.Split(StatArr[1]," ")[1][1:]
+		info.Members = strings.Split(StatArr[2]," ")[1]
 	})
 
 	c.OnRequest(func(r *colly.Request) {
@@ -42,7 +50,7 @@ func ScrapeWebsite(id string){
 	})
 
 	c.Visit(URL)
-
+	return info
 }
 
 func AnimeHandler(w http.ResponseWriter, r *http.Request){
@@ -54,8 +62,14 @@ func AnimeHandler(w http.ResponseWriter, r *http.Request){
 	}
 	
 	// Web scraping
-	ScrapeWebsite(id)
-    fmt.Fprintf(w, id)
+	info := ScrapeWebsite(id)
+	b, err := json.Marshal(info)
+	if err != nil {
+        fmt.Println(err)
+        return
+    }
+	w.Header().Set("Content-Type", "application/json")
+    fmt.Fprintf(w, string(b))
     fmt.Println("Endpoint Hit: AnimeHandler")
 }
 
