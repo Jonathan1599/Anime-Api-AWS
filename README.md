@@ -2,7 +2,7 @@
 
 
 ## Installation
-- Download Go 1.7 from the given [link] {https://golang.org/doc/install}
+- Download Go 1.7 from the given [link] (https://golang.org/doc/install link)
 - Clone this repo to your desired location.
 - run `go run main.go`
 - Linux users, use `sudo go run main.go`
