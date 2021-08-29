@@ -19,7 +19,10 @@ type animeInfo struct {
 	Members    string`json:"Members"`
 }
 
-
+// Struct to report errors
+type errorStruct struct{
+	Error string `json:"Error"`
+}
 // This function is called if the given Anime ID is not found in the database
 func ScrapeWebsite  (id string) animeInfo {
 
@@ -27,7 +30,9 @@ func ScrapeWebsite  (id string) animeInfo {
 	c := colly.NewCollector(
 		// Allow the crawler to only navigate to links pertaining to the site mentioned
 		colly.AllowedDomains("myanimelist.net"),
-		colly.CacheDir("./cache"),
+		//Cache requests to reduce response time
+		//Alternatively a database can be used
+		colly.CacheDir("./temp/cache"),
 	)
 	URL := "https://myanimelist.net/anime/" + id
 
@@ -81,7 +86,8 @@ func AnimeHandler(w http.ResponseWriter, r *http.Request){
 	if len(info.Name) == 0 {
 		// Send an error to the user
 		w.Header().Set("Content-Type", "application/json")
-		ErrMsg := `{ "error : Incorrect ID or anime not available on https://myanimelist.net/ }`
+		ErrMsg := errorStruct{}
+		ErrMsg.Error = "Incorrect ID or ID not available on myanimelist.net"
 		JSONMsg, err := json.Marshal(ErrMsg)
 		if err != nil {
 			fmt.Println(err)
