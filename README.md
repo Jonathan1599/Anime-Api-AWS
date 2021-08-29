@@ -1,4 +1,4 @@
-# Trademarkia Go Anime API
+# Trademarkia Go Anime API (18BIS0100)
 
 
 ## Installation
@@ -26,5 +26,5 @@ EXAMPLE :  http://3.143.230.153/anime/223
 Note that this instance will be kept online for a maximum duration of **three days**.
 
 ## Video code Walk through
- [Link](https://drive.google.com/file/d/1OvJ2NWR_aQ0QWeRqdVNI0lvE4IPlEb_x/view?usp=sharing) \n
+ [Link](https://drive.google.com/file/d/1OvJ2NWR_aQ0QWeRqdVNI0lvE4IPlEb_x/view?usp=sharing) <br />
  PS : If you watched the code walk through, I was unable to use CloudFront to cache and act as a CDN to allow for time based caching :grimacing:
