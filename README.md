@@ -16,7 +16,8 @@ Enter the Anime ID and if myanimelist.net has the ID, the API will return the
 * Name 
 * Rank
 * Popularity, and
-* Members of the Anime <br />
+* Members of the Anime 
+<br />
 In case the ID doesn't exist on myanimelist.net, an error message will be displayed.
 
 ## Deployment
