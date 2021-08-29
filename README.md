@@ -1,8 +1,6 @@
 # Trademarkia Go Anime API
-[![Moleculer](https://badgen.net/badge/Powered%20by/Moleculer/0e83cd)](https://moleculer.services)
+[![Moleculer](<a href="https://codeclimate.com/github/golang/go/maintainability"><img src="https://api.codeclimate.com/v1/badges/e2501feae059fffca5da/maintainability" /></a>)
 
-# Dyte_Backend_task
-This is the Dyte_backend Task created using Express and Molecular to create a webhooks microservice.
 
 ## Installation
 - Download Go 1.7 from the given [link] {https://golang.org/doc/install}
